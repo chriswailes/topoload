@@ -15,7 +15,6 @@
 
 #include <pthread.h>
 #include <sched.h>
-#include <stdio.h>
 #include <unistd.h>
 
 /*
@@ -55,6 +54,42 @@ JNIEXPORT jint JNICALL Java_org_chris_sched_CPU_cpus_1configured(JNIEnv* env, jc
 }
 
 /*
+ * Get the IDs of the processors this thread can execute on.
+ */
+JNIEXPORT jintArray JNICALL Java_org_chris_sched_CPU_get_1affinity(JNIEnv* env, jclass klass) {
+	unsigned int index, count = 0;
+	
+	jintArray result;
+	jint* elements;
+	
+	cpu_set_t affinity;
+	CPU_ZERO(&affinity);
+	
+	pthread_getaffinity_np(pthread_self(), sizeof(cpu_set_t), &affinity);
+	
+	// Figure out how many CPUs are in the affinity set.
+	for (index = sysconf(_SC_NPROCESSORS_ONLN); index-- > 0;) {
+		if (CPU_ISSET(index, &affinity)) {
+			++count;
+		}
+	}
+	
+	result	= (*env)->NewIntArray(env, count);
+	elements	= (*env)->GetIntArrayElements(env, result, 0);
+	
+	// Add the IDs to the affinity array.
+	for (index = sysconf(_SC_NPROCESSORS_ONLN); index-- > 0;) {
+		if (CPU_ISSET(index, &affinity)) {
+			elements[--count] = index;
+		}
+	}
+	
+	(*env)->ReleaseIntArrayElements(env, result, elements, 0);
+	
+	return result;
+}
+
+/*
  * Get the ID for the CPU that the current thread is running on.
  */
 JNIEXPORT jint JNICALL Java_org_chris_sched_CPU_get_1id (JNIEnv* env, jclass klass) {
@@ -64,7 +99,7 @@ JNIEXPORT jint JNICALL Java_org_chris_sched_CPU_get_1id (JNIEnv* env, jclass kla
 /*
  * Sets the current thread's affinity for the given processor IDs.
  */
-JNIEXPORT void JNICALL Java_org_chris_sched_CPU_pin(JNIEnv* env, jclass klass, jintArray IDs) {
+JNIEXPORT void JNICALL Java_org_chris_sched_CPU_set_1affinity(JNIEnv* env, jclass klass, jintArray IDs) {
 	cpu_set_t affinity;
 	CPU_ZERO(&affinity);
 	

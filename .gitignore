@@ -3,4 +3,4 @@ celluloid/*.so
 celluloid/org/chris/sched/*.class
 
 celluloid/c-src/*.o
-cdlluloid/c-src/jni/*.h
+celluloid/c-src/jni/*.h

@@ -7,7 +7,7 @@ LFLAGS	=
 COBJECTS	= c-src/CPU.o
 LIBNAME	= JavaSched
 
-JAVA_SOURCE_FILES	= org/chris/sched/CPU.class
+JAVA_SOURCE_FILES	= org/chris/sched/CPU.java
 JAVA_CLASS_FILES	= $(JAVA_SOURCE_FILES:.java=.class)
 JAVA_CLASS_NAMES	= $(subst /,.,$(JAVA_CLASS_FILES:.class=))
 

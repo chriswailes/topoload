@@ -2,12 +2,18 @@
 
 require 'topoload'
 
-puts Topoload.cpuid
+puts "CPU ID: #{Topoload.cpuid}"
 
+puts "Pinning to [0, 1]."
 Topoload.pin(0, 1)
 
-puts Topoload.cpuid
+puts "Affinity: [#{Topoload.get_affinity.join(', ')}]."
 
+puts "CPU ID: #{Topoload.cpuid}"
+
+puts "Pinning to [3]."
 Topoload.pin(3)
 
-puts Topoload.cpuid
+puts "Affinity: [#{Topoload.get_affinity.join(', ')}]."
+
+puts "CPU ID: #{Topoload.cpuid}"

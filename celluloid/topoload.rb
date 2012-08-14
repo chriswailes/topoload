@@ -4,24 +4,25 @@ module Topoload
 			Java::org::chris::sched::CPU.get_id()
 		end
 		
+		def get_affinity
+			Java::org::chris::sched::CPU.get_affinity.to_a
+		end
+		
 		def num_cpus(type = :online)
 			if type == :configured
-				Java::org::chris::sched::CPU.cpus_configured()
+				@configured ||= Java::org::chris::sched::CPU.cpus_configured()
 			else
 				Java::org::chris::sched::CPU.cpus_online()
 			end
 		end
 		
-		def pin(*ids)
+		def set_affinity(*ids)
 			if ids.empty?
 				Java::org::chris::sched::CPU.pin()
 			else
-				Java::org::chris::sched::CPU.pin(ids.to_java(Java::int))
+				Java::org::chris::sched::CPU.set_affinity(ids.to_java(Java::int))
 			end
 		end
-		
-		def tmp 
-			Java::org::chris::sched::CPU.methods.sort
-		end
+		alias :pin :set_affinity
 	end
 end
