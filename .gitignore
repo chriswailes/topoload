@@ -1,0 +1,6 @@
+*.so
+
+org/**/*.class
+
+c-src/*.o
+c-src/jni/*.h
