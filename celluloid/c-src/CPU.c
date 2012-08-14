@@ -64,7 +64,7 @@ JNIEXPORT jint JNICALL Java_org_chris_sched_CPU_get_1id (JNIEnv* env, jclass kla
 /*
  * Sets the current thread's affinity for the given processor IDs.
  */
-JNIEXPORT void JNICALL Java_org_chris_sched_CPU_set_1affinity(JNIEnv* env, jclass klass, jintArray IDs) {
+JNIEXPORT void JNICALL Java_org_chris_sched_CPU_pin(JNIEnv* env, jclass klass, jintArray IDs) {
 	cpu_set_t affinity;
 	CPU_ZERO(&affinity);
 	

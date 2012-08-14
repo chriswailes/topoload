@@ -1,6 +1,6 @@
-*.so
+celluloid/*.so
 
-org/**/*.class
+celluloid/org/chris/sched/*.class
 
-c-src/*.o
-c-src/jni/*.h
+celluloid/c-src/*.o
+cdlluloid/c-src/jni/*.h

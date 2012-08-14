@@ -13,10 +13,10 @@ class CPU {
 	public static void pin(int cpu_id) {
 		int[] IDs = {cpu_id};
 		
-		set_affinity(IDs);
+		pin(IDs);
 	}
 	
-	public static native void set_affinity(int[] IDs);
+	public static native void pin(int[] IDs);
 	
 	static {
 		System.loadLibrary("JavaSched");
