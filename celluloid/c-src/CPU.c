@@ -68,11 +68,7 @@ JNIEXPORT jintArray JNICALL Java_org_chris_sched_CPU_get_1affinity(JNIEnv* env, 
 	pthread_getaffinity_np(pthread_self(), sizeof(cpu_set_t), &affinity);
 	
 	// Figure out how many CPUs are in the affinity set.
-	for (index = sysconf(_SC_NPROCESSORS_ONLN); index-- > 0;) {
-		if (CPU_ISSET(index, &affinity)) {
-			++count;
-		}
-	}
+	count = CPU_COUNT(&affinity);
 	
 	result	= (*env)->NewIntArray(env, count);
 	elements	= (*env)->GetIntArrayElements(env, result, 0);
