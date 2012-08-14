@@ -18,12 +18,6 @@ module Topoload
 			else
 				Java::org::chris::sched::CPU.pin(ids.to_java(Java::int))
 			end
-			
-#			case overloaded
-#			when nil		then Java::org::chris::sched::CPU.pin()
-#			when Fixnum	then Java::org::chris::sched::CPU.pin(overloaded)
-#			when Array	then Java::org::chris::sched::CPU.pin(overloaded.to_java(Java::int))
-#			end
 		end
 		
 		def tmp 
